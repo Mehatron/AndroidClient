@@ -5,4 +5,6 @@
     <string name="server_address">Server address</string>
     <string name="connect">Connect</string>
 
+    <string name="connecting">Connecting...</string>
+
 </resources>

@@ -1,6 +1,7 @@
 package net.ddns.zivlak.mehatron.robotichand;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.java_websocket.client.WebSocketClient;
@@ -8,9 +9,10 @@ import org.java_websocket.handshake.ServerHandshake;
 
 public class WSClient {
 
-	private WebSocketClient m_webSocketClient;
-	private List<IConnectHandler> m_connectHandlers;
-	private List<IMessageHandler> m_messageHandlers;
+	private WebSocketClient m_webSocketClient = null;
+	private List<IConnectHandler> m_connectHandlers = new ArrayList<IConnectHandler>();
+	private List<IMessageHandler> m_messageHandlers = new ArrayList<IMessageHandler>();
+	private List<IErrorHandler> m_errorHandlers = new ArrayList<IErrorHandler>();
 
 	protected WSClient(URI url) {
 
@@ -30,6 +32,8 @@ public class WSClient {
 			
 			@Override
 			public void onError(Exception ex) {
+				for(IErrorHandler errorHandler : m_errorHandlers)
+					errorHandler.onError(ex);
 			}
 			
 			@Override
@@ -58,6 +62,10 @@ public class WSClient {
 		m_messageHandlers.add(handler);
 	}
 
+	public void addOnErrorHandler(IErrorHandler handler) {
+		m_errorHandlers.add(handler);
+	}
+
 	/*
 	 * Singleton
 	 */
@@ -75,12 +83,21 @@ public class WSClient {
 		return s_wsClient;
 	}
 
-	public static void disconnect() {
-		s_wsClient.close();
-		s_wsClient = null;
+	public static WSClient createInstance(URI url) {
+		if(s_wsClient != null)
+			s_wsClient.close();
+		s_wsClient = new WSClient(url);
+
+		return s_wsClient;
 	}
 
 	public static WSClient getInstance() {
 		return s_wsClient;
+	}
+
+
+	public static void disconnect() {
+		s_wsClient.close();
+		s_wsClient = null;
 	}
 }

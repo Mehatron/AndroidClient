@@ -33,6 +33,7 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 	float m_stickY = 0.0f;
 
 	int m_direction;
+	IDirectionChangeHandler m_directionChangeHandler = null;
 
 	public Joypad(Context context) {
 		super(context);
@@ -55,6 +56,10 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 			e.printStackTrace();
 		}
 		m_thread = null;
+	}
+
+	public void setOnDirectionChangeHandler(IDirectionChangeHandler handler) {
+		m_directionChangeHandler = handler;
 	}
 
 	@Override
@@ -140,6 +145,8 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 		int direction = coordsToDirection(m_stickX, m_stickY);
 		if(direction != m_direction) {
 			m_direction = direction;
+			if(m_directionChangeHandler != null)
+				m_directionChangeHandler.onDirectionChanged(m_direction);
 		}
 
 		return true;

@@ -22,5 +22,11 @@
         android:layout_height="wrap_content"
         android:text="@string/connect"
         />
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Joypad Test"
+        />
 
 </LinearLayout>

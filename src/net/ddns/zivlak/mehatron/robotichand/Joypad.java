@@ -156,6 +156,8 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 	}
 
 	private int coordsToDirection(float x, float y) {
+		if(x == 0 && y == 0)
+			return DIRECTION_CENTER;
 		y = -y;
 
 		double angle = Math.atan(y / x);
@@ -164,13 +166,13 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 		if(y < 0)
 			angle += Math.PI;
 
-		if(angle >= Math.PI * 5.0 / 3.0 || angle <= Math.PI / 3.0)
+		if(angle >= Math.PI * 7.0 / 4.0 || angle <= Math.PI / 4.0)
 			return DIRECTION_RIGHT;
-		if(angle >= Math.PI / 3.0 && angle <= Math.PI * 2.0 / 3.0)
+		if(angle >= Math.PI / 4.0 && angle <= Math.PI * 3.0 / 4.0)
 			return DIRECTION_UP;
-		if(angle >= Math.PI * 2.0 / 3.0 && angle <= Math.PI * 4.0 / 3.0)
+		if(angle >= Math.PI * 3.0 / 4.0 && angle <= Math.PI * 5.0 / 4.0)
 			return DIRECTION_LEFT;
-		if(angle >= Math.PI * 4.0 / 3.0 && angle <= Math.PI * 5.0 / 3.0)
+		if(angle >= Math.PI * 5.0 / 4.0 && angle <= Math.PI * 7.0 / 4.0)
 			return DIRECTION_DOWN;
 
 		return DIRECTION_CENTER;

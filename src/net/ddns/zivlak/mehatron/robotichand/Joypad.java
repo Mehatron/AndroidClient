@@ -7,8 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader.TileMode;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -91,11 +93,22 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 	private void drawBackgroundCircle(Canvas canvas) {
 
 		Paint pCircle = new Paint();
-		pCircle.setColor(Color.rgb(65, 67, 71));
+		//pCircle.setColor(Color.rgb(65, 67, 71));
+		//pCircle.setColor(Color.rgb(9, 98, 124));
+		pCircle.setColor(Color.rgb(28, 88, 109));
 
 		float x = canvas.getWidth() / 2;
 		float y = canvas.getHeight() / 2;
 		float r = Math.min(canvas.getWidth(), canvas.getHeight()) / 3;
+
+		/*
+		pCircle.setShader(new RadialGradient(x,
+											 y,
+											 r,
+											 Color.TRANSPARENT,
+											 Color.rgb(9,  98,  124),
+											 TileMode.MIRROR));
+		*/
 		canvas.drawCircle(x, y, r, pCircle);
 
 		Paint pLine = new Paint();
@@ -117,15 +130,23 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 	private void drawStick(Canvas canvas) {
 
 		Paint pCircle = new Paint();
-		pCircle.setColor(Color.rgb(75, 77, 81));
+		//pCircle.setColor(Color.rgb(75, 77, 81));
+		//pCircle.setColor(Color.rgb(36, 194, 242));
 
 		float cx = canvas.getWidth() / 2;
 		float cy = canvas.getHeight() / 2;
 
 		float x = cx + m_stickX;
 		float y = cy + m_stickY;
-
 		float r = Math.min(canvas.getWidth(), canvas.getHeight()) / 8;
+
+		pCircle.setShader(new RadialGradient(x,
+											 y,
+											 r,
+											 Color.TRANSPARENT,
+											 Color.rgb(37,  194, 242),
+											 TileMode.MIRROR));
+
 		canvas.drawCircle(x, y, r, pCircle);
 	}
 

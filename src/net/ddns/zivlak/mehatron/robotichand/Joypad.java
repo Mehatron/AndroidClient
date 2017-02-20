@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
 import android.graphics.RadialGradient;
 import android.graphics.Rect;
@@ -93,6 +94,7 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 	private void drawBackgroundCircle(Canvas canvas) {
 
 		Paint pCircle = new Paint();
+		pCircle.setStyle(Style.FILL_AND_STROKE);
 		//pCircle.setColor(Color.rgb(65, 67, 71));
 		//pCircle.setColor(Color.rgb(9, 98, 124));
 		pCircle.setColor(Color.rgb(28, 88, 109));
@@ -130,6 +132,7 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 	private void drawStick(Canvas canvas) {
 
 		Paint pCircle = new Paint();
+		pCircle.setStyle(Style.FILL);
 		//pCircle.setColor(Color.rgb(75, 77, 81));
 		//pCircle.setColor(Color.rgb(36, 194, 242));
 

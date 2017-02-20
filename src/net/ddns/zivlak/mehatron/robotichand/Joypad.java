@@ -145,6 +145,17 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 			break;
 		}
 
+		double r = Math.sqrt(Math.pow(m_stickX, 2) + Math.pow(m_stickY, 2));
+		double cr = Math.min(m_width, m_height) / 3.0;
+		if(r > cr) {
+			double angle = 0;
+			try {
+				angle = coordsToAngle(m_stickX, m_stickY);
+			} catch(Exception e) {}
+			m_stickX = (float)(cr * Math.cos(angle));
+			m_stickY = -(float)(cr * Math.sin(angle));
+		}
+
 		int direction = coordsToDirection(m_stickX, m_stickY);
 		if(direction != m_direction) {
 			m_direction = direction;
@@ -156,15 +167,13 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 	}
 
 	private int coordsToDirection(float x, float y) {
-		if(x == 0 && y == 0)
-			return DIRECTION_CENTER;
-		y = -y;
+		double angle;
 
-		double angle = Math.atan(y / x);
-		if(angle < 0)
-			angle += Math.PI;
-		if(y < 0)
-			angle += Math.PI;
+		try {
+			angle = coordsToAngle(x, y);
+		} catch (Exception e) {
+			return DIRECTION_CENTER;
+		}
 
 		if(angle >= Math.PI * 7.0 / 4.0 || angle <= Math.PI / 4.0)
 			return DIRECTION_RIGHT;
@@ -176,5 +185,24 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 			return DIRECTION_DOWN;
 
 		return DIRECTION_CENTER;
+	}
+
+	private double coordsToAngle(float x, float y) throws Exception {
+		y = -y;
+		double angle;
+
+		if(x == 0.0f && y == 0.0f)
+			throw new Exception("Angle not extists");
+		else if(x == 0.0f)
+			angle = 90.0;
+		else
+			angle = Math.atan(y / x);
+
+		if(angle < 0)
+			angle += Math.PI;
+		if(y < 0)
+			angle += Math.PI;
+
+		return angle;
 	}
 }

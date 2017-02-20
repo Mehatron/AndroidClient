@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 		super(context);
 
 		m_holder = getHolder();
+		m_holder.setFormat(PixelFormat.TRANSPARENT);
 		setOnTouchListener(this);
 	}
 
@@ -79,7 +81,8 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 		m_width = canvas.getWidth();
 		m_height = canvas.getHeight();
 
-		canvas.drawARGB(255, 255, 255, 255);
+		//canvas.drawARGB(0, 255, 255, 255);
+		canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
 
 		drawBackgroundCircle(canvas);
 		drawStick(canvas);

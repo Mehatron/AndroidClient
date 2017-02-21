@@ -51,8 +51,9 @@ public class MainActivity extends Activity {
 			switch(resultCode)
 			{
 			case ConnectingActivity.ACTIVITY_RESULT_CONNECTED:
-				// This is temporarly, there will be start new activity
 				Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent("net.ddns.zivlak.mehatron.robotichand.CONTROL");
+				startActivity(intent);
 				break;
 			case ConnectingActivity.ACTIVITY_RESULT_FAILED:
 				Toast.makeText(this,

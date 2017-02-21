@@ -20,6 +20,7 @@ public class ConnectingActivity extends Activity implements Runnable {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.connecting);
 
+		setResult(ACTIVITY_RESULT_FAILED);
 		new Thread(this).start();
 	}
 

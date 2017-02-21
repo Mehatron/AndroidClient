@@ -193,6 +193,11 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 	private int coordsToDirection(float x, float y) {
 		double angle;
 
+		double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+		double cr = Math.min(m_width, m_height) / 8.0;
+		if(r < cr)
+			return DIRECTION_CENTER;
+
 		try {
 			angle = coordsToAngle(x, y);
 		} catch (Exception e) {

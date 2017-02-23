@@ -52,6 +52,30 @@ public class ControlActivity extends Activity {
 		m_joypadRight.setZOrderOnTop(true);
 		LinearLayout jr = (LinearLayout)findViewById(R.id.joypadRight);
 		jr.addView(m_joypadRight);
+		m_joypadRight.setOnDirectionChangeHandler(new IDirectionChangeHandler() {
+
+			@Override
+			public void onDirectionChanged(int direction) {
+				WSClient wsClient = WSClient.getInstance();
+				if(wsClient == null)
+					return;
+
+				switch(direction) {
+				case Joypad.DIRECTION_RIGHT:
+					wsClient.send("right_right");
+					break;
+				case Joypad.DIRECTION_UP:
+					wsClient.send("right_up");
+					break;
+				case Joypad.DIRECTION_LEFT:
+					wsClient.send("right_left");
+					break;
+				case Joypad.DIRECTION_DOWN:
+					wsClient.send("right_down");
+					break;
+				}
+			}
+		});
 	}
 
 	@Override

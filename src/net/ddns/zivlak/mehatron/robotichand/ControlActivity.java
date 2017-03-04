@@ -2,6 +2,7 @@ package net.ddns.zivlak.mehatron.robotichand;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -19,6 +20,8 @@ public class ControlActivity extends Activity {
 							 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.control);
 
+		final WSClient wsClient = WSClient.getInstance();
+
 		m_joypadLeft = new Joypad(this);
 		m_joypadLeft.setZOrderOnTop(true);
 		LinearLayout jl = (LinearLayout)findViewById(R.id.joypadLeft);
@@ -27,7 +30,6 @@ public class ControlActivity extends Activity {
 
 			@Override
 			public void onDirectionChanged(int direction) {
-				WSClient wsClient = WSClient.getInstance();
 				if(wsClient == null)
 					return;
 
@@ -56,7 +58,6 @@ public class ControlActivity extends Activity {
 
 			@Override
 			public void onDirectionChanged(int direction) {
-				WSClient wsClient = WSClient.getInstance();
 				if(wsClient == null)
 					return;
 
@@ -74,6 +75,13 @@ public class ControlActivity extends Activity {
 					wsClient.send("right_down");
 					break;
 				}
+			}
+		});
+
+		wsClient.addOnMessageHandler(new IMessageHandler() {
+
+			@Override
+			public void onMessageRecived(String message) {
 			}
 		});
 	}

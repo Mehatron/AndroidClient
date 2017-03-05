@@ -30,16 +30,6 @@ public class MainActivity extends Activity {
 				startActivityForResult(intent, ConnectingActivity.ACTIVITY_REQUEST);
 			}
 		});
-
-		Button btnTest = (Button)findViewById(R.id.btnTest);
-		btnTest.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent("net.ddns.zivlak.mehatron.robotichand.CONTROL");
-				startActivity(intent);
-			}
-		});
 	}
 
 	@Override

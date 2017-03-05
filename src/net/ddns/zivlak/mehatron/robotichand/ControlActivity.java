@@ -3,14 +3,17 @@ package net.ddns.zivlak.mehatron.robotichand;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 public class ControlActivity extends Activity {
 
 	Joypad m_joypadLeft;
 	Joypad m_joypadRight;
+	JoypadButton m_grabButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,19 @@ public class ControlActivity extends Activity {
 			}
 		});
 
+		m_grabButton = new JoypadButton(this);
+		m_grabButton.setText("P");
+		m_grabButton.setZOrderOnTop(true);
+		LinearLayout gb = (LinearLayout)findViewById(R.id.grabButton);
+		gb.addView(m_grabButton);
+		m_grabButton.setOnClickHandler(new IClickHandler() {
+
+			@Override
+			public void onClick() {
+				wsClient.send("grab_toggle");
+			}
+		});
+
 		wsClient.addOnMessageHandler(new IMessageHandler() {
 
 			@Override
@@ -91,6 +107,7 @@ public class ControlActivity extends Activity {
 		super.onPause();
 		m_joypadLeft.pause();
 		m_joypadRight.pause();
+		m_grabButton.pause();
 	}
 
 	@Override
@@ -98,5 +115,6 @@ public class ControlActivity extends Activity {
 		super.onResume();
 		m_joypadLeft.resume();
 		m_joypadRight.resume();
+		m_grabButton.resume();
 	}
 }

@@ -14,19 +14,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textUri"
-        android:text="192.168.0.11"
+        android:text="@string/default_ip"
         />
     <Button 
         android:id="@+id/btnConnect"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/connect"
-        />
-    <Button
-        android:id="@+id/btnTest"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Joypad Test"
         />
 
 </LinearLayout>

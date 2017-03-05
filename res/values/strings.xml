@@ -2,6 +2,8 @@
 
     <string name="app_name">Robotic Hand</string>
 
+    <string name="default_ip">192.168.8.100</string>
+
     <string name="server_address">Server address</string>
     <string name="connect">Connect</string>
 

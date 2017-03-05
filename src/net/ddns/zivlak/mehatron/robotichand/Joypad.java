@@ -1,56 +1,51 @@
 package net.ddns.zivlak.mehatron.robotichand;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
 import android.graphics.RadialGradient;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
+public class Joypad extends SurfaceView implements Runnable, Callback, OnTouchListener {
 
-	static final int DIRECTION_CENTER			= 0;
-	static final int DIRECTION_RIGHT			= 1;
-	static final int DIRECTION_UP				= 2;
-	static final int DIRECTION_LEFT				= 3;
-	static final int DIRECTION_DOWN				= 4;
+	public static final int DIRECTION_CENTER			= 0;
+	public static final int DIRECTION_RIGHT				= 1;
+	public static final int DIRECTION_UP				= 2;
+	public static final int DIRECTION_LEFT				= 3;
+	public static final int DIRECTION_DOWN				= 4;
 
-	Thread m_thread = null;
-	boolean m_running = false;
-	SurfaceHolder m_holder;
+	private Thread m_thread = null;
+	private boolean m_running = false;
+	private SurfaceHolder m_holder;
 
-	float m_width = 0.0f;
-	float m_height = 0.0f;
-	float m_stickX = 0.0f;
-	float m_stickY = 0.0f;
+	private float m_width = 0.0f;
+	private float m_height = 0.0f;
+	private float m_stickX = 0.0f;
+	private float m_stickY = 0.0f;
 
-	int m_direction;
-	IDirectionChangeHandler m_directionChangeHandler = null;
+	private int m_direction;
+	private IDirectionChangeHandler m_directionChangeHandler = null;
 
 	public Joypad(Context context) {
 		super(context);
 
 		m_holder = getHolder();
 		m_holder.setFormat(PixelFormat.TRANSPARENT);
+
+		m_holder.addCallback(this);
 		setOnTouchListener(this);
 	}
 
 	public void resume() {
-		m_running = true;
-		m_thread = new Thread(this);
-		m_thread.start();
 	}
 
 	public void pause() {
@@ -233,5 +228,21 @@ public class Joypad extends SurfaceView implements Runnable, OnTouchListener {
 			angle += Math.PI;
 
 		return angle;
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int arg1, int arg2, int arg3) {
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		m_running = true;
+		m_thread = new Thread(this);
+		m_thread.start();
+
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
 	}
 }
